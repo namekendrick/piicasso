@@ -51,13 +51,14 @@ export default function SetupPage() {
   const [gameBackendCreated, setGameBackEndCreated] = useState(false);
 
   useEffect(() => {
-    const launchDate = new Date(2023, 7, 8);
+    const launchDate = new Date("Aug 7 2023");
     const timeDiff = new Date().getTime() - launchDate.getTime();
     const storage = localStorage.getItem("game");
     if (data && storage) {
       const index =
         Math.floor(Math.abs(timeDiff / (1000 * 3600 * 24))) % data.length;
       setDaily(data[index]);
+      console.log(index);
       if (JSON.parse(storage).state.id === data[index].id) {
         setGame(JSON.parse(storage).state);
         setId(data[index].id);
@@ -138,7 +139,7 @@ export default function SetupPage() {
   }, [isWinner, isLoser, gameBackendCreated, gameStateReady]);
 
   if (error) return <div>failed to load</div>;
-  if (isLoading) return <Navbar loading />;
+  if (isLoading) return <Navbar />;
 
   return (
     <>

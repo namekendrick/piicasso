@@ -1,0 +1,7 @@
+- Update the footer to be relative instead of fixed
+- Prevent game images from showing before received from the server
+- Add dropdown component to Navbar
+- Add toast notifications for remaining attempts
+- Query only the game we need instead of all games
+- Remove focus rings from modals
+- Fix loading state style on the Subscribe modal button
