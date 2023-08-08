@@ -1,6 +1,6 @@
 import { Nunito } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
 
+import AuthProvider from "@/providers/auth-provider";
 import { ModalProvider } from "@/providers/modal-provider";
 
 import "./globals.css";
@@ -14,7 +14,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
+    <AuthProvider>
       <html lang="en">
         <body
           className={`${nunito.className} scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-gray-100`}
@@ -23,6 +23,6 @@ export default function RootLayout({ children }) {
           {children}
         </body>
       </html>
-    </ClerkProvider>
+    </AuthProvider>
   );
 }

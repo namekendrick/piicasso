@@ -1,42 +1,33 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useUser } from "@clerk/clerk-react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import axios from "axios";
+import useSWR from "swr";
 
 import Navbar from "@/components/Navbar";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
 const GalleryPage = () => {
-  const { user } = useUser();
+  const { data: session, status } = useSession({
+    required: true,
+  });
+  const { data, error, isLoading } = useSWR("/api/user", fetcher, {
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  });
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState({});
+  console.log(session);
+  console.log(data);
 
-  useEffect(() => {
-    (async () => {
-      if (user) {
-        setIsLoading(true);
-        const response = await axios.post("/api/user");
-        if (response.data === "User already exists") {
-          const res = await axios.get("/api/user");
-          setData(res.data);
-          setIsLoading(false);
-        } else {
-          setData(response.data);
-          setIsLoading(false);
-        }
-      }
-    })();
-  }, [user]);
-
-  if (isLoading && !data) {
+  if (status === "loading" || isLoading) {
     return (
       <>
-        <Navbar />
+        <Navbar loading />
         <div className="px-4 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
             <Skeleton className="h-[250px] w-full" />

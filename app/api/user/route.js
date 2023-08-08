@@ -1,14 +1,13 @@
-import { auth, currentUser } from "@clerk/nextjs";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
 import { NextResponse } from "next/server";
 
 import prisma from "@/lib/prismadb";
 
 export async function GET() {
   try {
-    const { userId } = auth();
-    console.log(userId);
-    const u = await currentUser();
-    console.log(u);
+    const session = await getServerSession(authOptions);
+    const userId = session.userId;
 
     let user = await prisma.user.findUnique({
       where: {
@@ -32,10 +31,8 @@ export async function GET() {
 
 export async function POST() {
   try {
-    const { userId } = auth();
-    console.log(userId);
-    const u = await currentUser();
-    console.log(u);
+    const session = await getServerSession(authOptions);
+    const userId = session.userId;
 
     let user = await prisma.user.findUnique({
       where: {

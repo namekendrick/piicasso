@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { useUser } from "@clerk/clerk-react";
+import { useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import axios from "axios";
 import Loader from "react-loaders";
@@ -19,7 +20,7 @@ import { Form } from "@/components/ui/form";
 import Link from "next/link";
 
 export const WinModal = () => {
-  const { isSignedIn } = useUser();
+  const { data: user } = useSession();
   const subscribeModal = useSubscribeModal();
   const router = useRouter();
   const winModal = useWinModal();
@@ -80,7 +81,7 @@ export const WinModal = () => {
               using today's prompt.
             </p>
           </div>
-          {isSignedIn ? (
+          {user ? (
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
                 <Button
@@ -97,13 +98,16 @@ export const WinModal = () => {
               </form>
             </Form>
           ) : (
-            <Link href="/sign-in">
+            <Link href="/signin">
               <Button
-                onClick={() => winModal.onClose()}
+                onClick={() => {
+                  winModal.onClose();
+                  signIn();
+                }}
                 className="mt-4 w-full"
                 variant="solid"
               >
-                <p>Generate</p>
+                <p>Continue</p>
               </Button>
             </Link>
           )}

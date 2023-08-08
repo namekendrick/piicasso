@@ -9,8 +9,45 @@ datasource db {
 }
 
 model User {
-  id         String              @id @unique
-  dailyGames UsersOnDailyGames[]
+  id            String              @id @default(uuid())
+  createdAt     DateTime            @default(now())
+  email         String?             @unique
+  password      String?             @db.Text
+  emailVerified DateTime?
+  name          String?             @db.Text
+  image         String?             @db.Text
+  accounts      Account[]
+  sessions      Session[]
+  dailyGames    UsersOnDailyGames[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model DailyGame {
@@ -24,8 +61,8 @@ model DailyGame {
 
 model UsersOnDailyGames {
   userId         String
-  dailyGameId    Int
   createdAt      DateTime  @default(now())
+  dailyGameId    Int
   status         String
   generatedImage String?   @db.Text
   user           User      @relation(fields: [userId], references: [id])

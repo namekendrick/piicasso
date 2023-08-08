@@ -1,11 +1,13 @@
-import { auth } from "@clerk/nextjs";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
 import { NextResponse } from "next/server";
 
 import prisma from "@/lib/prismadb";
 
 export async function POST(req) {
   try {
-    const { userId } = auth();
+    const session = await getServerSession(authOptions);
+    const userId = session.userId;
     const { searchParams } = new URL(req.url);
     const gameId = searchParams.get("id");
     const gameStatus = searchParams.get("status");
@@ -48,7 +50,8 @@ export async function POST(req) {
 
 export async function PATCH(req) {
   try {
-    const { userId } = auth();
+    const session = await getServerSession(authOptions);
+    const userId = session.userId;
     const { searchParams } = new URL(req.url);
     const gameId = searchParams.get("id");
     const gameStatus = searchParams.get("status");

@@ -1,4 +1,5 @@
-import { auth, currentUser } from "@clerk/nextjs";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
 import { NextResponse } from "next/server";
 
 import prisma from "@/lib/prismadb";
@@ -9,10 +10,10 @@ const settingsUrl = absoluteUrl("/settings");
 
 export async function GET() {
   try {
-    const { userId } = auth();
-    const user = await currentUser();
+    const session = await getServerSession(authOptions);
+    const userId = session.userId;
 
-    if (!userId || !user) {
+    if (!userId || !session) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
@@ -37,7 +38,7 @@ export async function GET() {
       payment_method_types: ["card"],
       mode: "subscription",
       billing_address_collection: "auto",
-      customer_email: user.emailAddresses[0].emailAddress,
+      customer_email: session.user.email,
       line_items: [
         {
           price_data: {

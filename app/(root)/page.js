@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { useUser } from "@clerk/clerk-react";
+import { useSession } from "next-auth/react";
 import useSWR from "swr";
 import axios from "axios";
 
@@ -16,13 +16,12 @@ import Navbar from "@/components/Navbar";
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function SetupPage() {
+  const { data: user } = useSession();
   const { data, error, isLoading } = useSWR("/api/image", fetcher, {
     revalidateIfStale: false,
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
   });
-
-  const { user } = useUser();
 
   const setWon = useGame((game) => game.setWon);
   const setLost = useGame((game) => game.setLost);
@@ -52,7 +51,7 @@ export default function SetupPage() {
   const [gameBackendCreated, setGameBackEndCreated] = useState(false);
 
   useEffect(() => {
-    const launchDate = new Date(2023, 7, 6);
+    const launchDate = new Date(2023, 7, 8);
     const timeDiff = new Date().getTime() - launchDate.getTime();
     const storage = localStorage.getItem("game");
     if (data && storage) {

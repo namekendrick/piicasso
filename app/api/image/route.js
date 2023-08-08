@@ -1,4 +1,5 @@
-import { auth } from "@clerk/nextjs";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
 import { NextResponse } from "next/server";
 import { Configuration, OpenAIApi } from "openai";
 import { v2 as cloudinary } from "cloudinary";
@@ -36,7 +37,8 @@ export async function GET() {
 
 export async function POST(req) {
   try {
-    const { userId } = auth();
+    const session = await getServerSession(authOptions);
+    const userId = session.userId;
     const { searchParams } = new URL(req.url);
     const prompt = searchParams.get("prompt");
     const gameId = searchParams.get("id");
@@ -95,7 +97,8 @@ export async function POST(req) {
 
 export async function PATCH(req) {
   try {
-    const { userId } = auth();
+    const session = await getServerSession(authOptions);
+    const userId = session.userId;
     const { searchParams } = new URL(req.url);
     const gameId = searchParams.get("id");
 
