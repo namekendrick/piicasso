@@ -51,7 +51,7 @@ export default function SetupPage() {
   const [gameBackendCreated, setGameBackEndCreated] = useState(false);
 
   useEffect(() => {
-    const launchDate = new Date("Aug 10 2023");
+    const launchDate = new Date("Aug 12 2023");
     const timeDiff = new Date().getTime() - launchDate.getTime();
     const storage = localStorage.getItem("game");
     if (data && storage) {
