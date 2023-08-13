@@ -50,7 +50,12 @@ export const SubscribeModal = () => {
             </div>
           </DialogDescription>
           <DialogFooter>
-            <Button onClick={onSubscribe} className="w-full mt-4 font-bold">
+            <Button
+              onClick={onSubscribe}
+              className="w-full mt-4 font-bold"
+              variant="solid"
+              disabled={isLoading}
+            >
               {isLoading ? (
                 <Loader type="pacman" style={{ transform: "scale(0.5)" }} />
               ) : (

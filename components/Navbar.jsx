@@ -6,9 +6,10 @@ import { GalleryHorizontalEnd } from "lucide-react";
 
 import { Button } from "./ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import UserDropdown from "./UserDropdown";
 
-const Navbar = ({ user, loading }) => {
-  const { data } = useSession();
+const Navbar = () => {
+  const { data: user, status } = useSession();
 
   return (
     <div className="bg-white border-b flex flex-wrap items-center justify-between p-4">
@@ -24,16 +25,14 @@ const Navbar = ({ user, loading }) => {
           piicasso
         </span>
       </Link>
-      <div className="flex justify-end basis-1/3 items-center md:order-2 gap-2">
-        {loading && <Skeleton className="h-8 w-8 rounded-full" />}
-        {user && (
-          <img
-            className="inline-block h-8 w-8 rounded-full"
-            src={data.user.image}
-            alt=""
-          />
-        )}
-      </div>
+      {
+        <div className="flex justify-end basis-1/3 items-center md:order-2 gap-2">
+          {status === "loading" && (
+            <Skeleton className="h-8 w-8 rounded-full" />
+          )}
+          {user ? <UserDropdown user={user.user} /> : null}
+        </div>
+      }
     </div>
   );
 };

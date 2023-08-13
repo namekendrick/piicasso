@@ -2,6 +2,7 @@ import { Nunito } from "next/font/google";
 
 import AuthProvider from "@/providers/auth-provider";
 import { ModalProvider } from "@/providers/modal-provider";
+import { Toaster } from "@/components/ui/toaster";
 
 import "./globals.css";
 
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
           className={`${nunito.className} scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-gray-100`}
         >
           <ModalProvider />
+          <Toaster />
           {children}
         </body>
       </html>
