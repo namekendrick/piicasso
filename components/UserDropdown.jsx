@@ -5,7 +5,6 @@ import Image from "next/image";
 import { Settings, LogOut } from "lucide-react";
 
 export default function UserDropdown({ user }) {
-  console.log(user);
   const ref = useRef();
 
   const [isNavOpen, setNavOpen] = useState(false);
