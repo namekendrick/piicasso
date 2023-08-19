@@ -63,7 +63,7 @@ const Keyboard = ({
 
   return (
     <>
-      <div className="w-full px-2">
+      <div className="w-full px-2 pb-14">
         <div className="flex flex-row basis-1/3 justify-center">
           {keys1.map((key) => {
             const isActive = activeLetters.includes(key);

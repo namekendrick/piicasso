@@ -9,7 +9,7 @@ const DailyPrompt = ({
 }) => {
   return (
     <div className="max-w-sm sm:max-w-md mx-auto">
-      <div className="flex gap-1.5 text-2xl font-extralight flex-wrap">
+      <div className="flex tracking-widest text-2xl font-extralight flex-wrap">
         {prompt?.split("").map((letter, index) => (
           <span
             style={{
@@ -29,7 +29,7 @@ const DailyPrompt = ({
                     : "#020617",
               }}
             >
-              {letter}
+              {letter === " " ? <span className="mr-2"></span> : letter}
             </span>
           </span>
         ))}

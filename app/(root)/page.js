@@ -137,7 +137,7 @@ export default function SetupPage() {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col items-center justify-center w-full mx-auto gap-8 mt-5">
+      <div className="flex flex-col items-center justify-start w-full mx-auto gap-8 mt-5">
         <div className="max-w-sm sm:max-w-md mx-auto">
           <div className="flex [&:hover>div]:w-8 [&>div:hover]:w-[300px] sm:[&>div:hover]:w-[400px]">
             <div className="group relative w-[200px] h-[300px] sm:w-[400px] sm:h-[400px] cursor-pointer overflow-hidden shadow-md shadow-black/30 transition-all duration-200">
