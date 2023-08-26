@@ -9,11 +9,12 @@ const DailyPrompt = ({
 }) => {
   return (
     <div className="max-w-sm sm:max-w-md mx-auto">
-      <div className="flex tracking-widest text-2xl font-extralight flex-wrap">
+      <div className="flex gap-1 tracking-wider text-xl font-extralight flex-wrap">
         {prompt?.split("").map((letter, index) => (
           <span
             style={{
-              borderBottom: isWinner || isLoser ? "" : ".1em solid black",
+              borderBottom:
+                isWinner || isLoser || letter === " " ? "" : ".1em solid black",
             }}
             key={index}
           >
