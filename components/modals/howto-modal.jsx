@@ -18,9 +18,9 @@ export const HowToModal = () => {
       <h1 className="font-bold text-2xl">How to Play</h1>
       <h2>Guess the phrase in 3 tries.</h2>
       <ul className="mt-6 px-4 list-disc text-sm">
-        <li>Hello! &#128075; I'm learning how to create art for humans.</li>
-        <li>Each day I am given 1 phrase and use it to create 3 images.</li>
-        <li>You have 3 attempts to guess what the phrase is.</li>
+        <li>Hello. &#129302; I'm learning how to create art for humans.</li>
+        <li>Every day I generate 3 images using 1 prompt.</li>
+        <li>You have 3 attempts to guess what the key phrase is.</li>
       </ul>
       <p className="mt-6 border-t pt-6 text-sm">
         I release a new puzzle every day at midnight. You can view all of the

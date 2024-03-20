@@ -11,6 +11,9 @@ const nunito = Nunito({ subsets: ["latin"] });
 export const metadata = {
   title: "Piicasso - An AI Image Guessing Game",
   description: "An AI image guessing game",
+  other: {
+    google: "notranslate",
+  },
 };
 
 export default function RootLayout({ children }) {

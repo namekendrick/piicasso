@@ -47,7 +47,7 @@ export async function GET() {
               name: "Piicasso",
               description: "Daily Image Generations",
             },
-            unit_amount: 100,
+            unit_amount: 300,
             recurring: {
               interval: "month",
             },

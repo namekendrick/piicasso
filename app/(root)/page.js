@@ -6,7 +6,7 @@ import useSWR from "swr";
 import axios from "axios";
 
 import { useGame } from "@/hooks/use-game-data";
-import useStoreModal from "@/hooks/use-howto-modal";
+import useHowToModal from "@/hooks/use-howto-modal";
 import useWinModal from "@/hooks/use-win-modal";
 import useLossModal from "@/hooks/use-loss-modal";
 import DailyPrompt from "@/components/DailyPrompt";
@@ -30,8 +30,8 @@ export default function SetupPage() {
   const clearState = useGame((game) => game.clearState);
   const status = useGame().status;
 
-  const onOpenStoreModal = useStoreModal((state) => state.onOpen);
-  const isOpenStoreModal = useStoreModal((state) => state.isOpen);
+  const onOpenHowToModal = useHowToModal((state) => state.onOpen);
+  const isOpenHowToModal = useHowToModal((state) => state.isOpen);
 
   const onOpenWinModal = useWinModal((state) => state.onOpen);
   const isOpenWinModal = useWinModal((state) => state.isOpen);
@@ -51,7 +51,7 @@ export default function SetupPage() {
   const [gameBackendCreated, setGameBackEndCreated] = useState(false);
 
   useEffect(() => {
-    const launchDate = new Date("Aug 25 2023");
+    const launchDate = new Date("Mar 20 2024");
     const timeDiff = new Date().getTime() - launchDate.getTime();
     const storage = localStorage.getItem("game");
     if (data && storage) {
@@ -108,6 +108,12 @@ export default function SetupPage() {
     },
     [game.guessedLetters, isLoser, isWinner]
   );
+
+  useEffect(() => {
+    if (!isWinner && !isLoser && gameStateReady) {
+      onOpenHowToModal();
+    }
+  }, [gameStateReady]);
 
   useEffect(() => {
     if (isWinner && daily) {

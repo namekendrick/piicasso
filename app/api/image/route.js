@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { NextResponse } from "next/server";
-import { Configuration, OpenAIApi } from "openai";
+import OpenAI from "openai";
 import { v2 as cloudinary } from "cloudinary";
 
 import { increaseApiLimit, checkApiLimit } from "@/lib/api-limit";
@@ -14,11 +14,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
-const openai = new OpenAIApi(configuration);
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export async function GET() {
   try {
@@ -47,10 +43,6 @@ export async function POST(req) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    if (!configuration.apiKey) {
-      return new NextResponse("OpenAI API Key not configured", { status: 500 });
-    }
-
     if (!prompt) {
       return new NextResponse("Prompt is required", { status: 400 });
     }
@@ -62,14 +54,15 @@ export async function POST(req) {
       return new NextResponse("Free trial has expired.", { status: 403 });
     }
 
-    const response = await openai.createImage({
+    const response = await openai.images.generate({
+      model: "dall-e-3",
       prompt: prompt + ", digital art",
       n: 1,
       size: "1024x1024",
     });
 
     const uploadedImage = await cloudinary.uploader.upload(
-      response.data.data[0].url
+      response.data[0].url
     );
 
     if (!isSubscribed) {
