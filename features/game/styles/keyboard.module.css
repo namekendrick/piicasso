@@ -1,0 +1,53 @@
+.btn {
+  width: 40px;
+  height: 55px;
+  margin: 2px;
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  background-color: #f1f5f9;
+  color: #020617;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+}
+
+.largeBtn {
+  width: 70px;
+  height: 55px;
+  margin: 2px;
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+  border: 1px solid #e2e8f0;
+  background-color: white;
+  color: #020617;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+}
+
+.btn.active {
+  background-color: #1e293b;
+  color: white;
+}
+
+.btn.inactive {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.largeBtn.inactive {
+  visibility: hidden;
+}
+
+.largeBtn.active {
+  background-color: #10b981;
+  color: white;
+  border: none;
+}
+
+.btn:hover:not(:disabled),
+.btn:focus:not(:disabled) {
+  background-color: #cbd5e1;
+}
