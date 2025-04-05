@@ -151,7 +151,8 @@ export const useGame = () => {
   const incorrectLetters = useMemo(() => {
     if (!currentGame?.prompt) return [];
     return guessedLetters.filter(
-      (letter) => !currentGame.prompt.includes(letter),
+      (letter) =>
+        !currentGame.prompt.toLowerCase().includes(letter.toLowerCase()),
     );
   }, [guessedLetters, currentGame]);
 
@@ -163,7 +164,13 @@ export const useGame = () => {
     if (!currentGame?.prompt) return false;
     return currentGame.prompt
       .split("")
-      .every((letter) => guessedLetters.includes(letter || ""));
+      .every(
+        (letter) =>
+          letter === " " ||
+          guessedLetters.some(
+            (guessed) => guessed.toLowerCase() === letter.toLowerCase(),
+          ),
+      );
   }, [currentGame, guessedLetters]);
 
   return {

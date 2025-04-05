@@ -42,7 +42,10 @@ const game = (set, get) => ({
 
     const incorrectLetters = newState.currentGame?.prompt
       ? newGuessedLetters.filter(
-          (letter) => !newState.currentGame.prompt.includes(letter),
+          (letter) =>
+            !newState.currentGame.prompt
+              .toLowerCase()
+              .includes(letter.toLowerCase()),
         )
       : [];
 
@@ -53,7 +56,13 @@ const game = (set, get) => ({
     const isWinner = newState.currentGame?.prompt
       ? newState.currentGame.prompt
           .split("")
-          .every((letter) => newGuessedLetters.includes(letter || ""))
+          .every(
+            (letter) =>
+              letter === " " ||
+              newGuessedLetters.some(
+                (guessed) => guessed.toLowerCase() === letter.toLowerCase(),
+              ),
+          )
       : false;
 
     if (isWinner && newState.status !== "WON") {

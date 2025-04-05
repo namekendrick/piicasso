@@ -19,11 +19,15 @@ export const DailyPrompt = ({
             <span
               style={{
                 visibility:
-                  guessedLetters.includes(letter) || reveal
+                  guessedLetters.some(
+                    (guessed) => guessed.toLowerCase() === letter.toLowerCase(),
+                  ) || reveal
                     ? "visible"
                     : "hidden",
                 color:
-                  !guessedLetters.includes(letter) && reveal
+                  !guessedLetters.some(
+                    (guessed) => guessed.toLowerCase() === letter.toLowerCase(),
+                  ) && reveal
                     ? "#f43f5e"
                     : "#020617",
               }}
