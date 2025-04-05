@@ -156,8 +156,8 @@ export const useGame = () => {
   }, [guessedLetters, currentGame]);
 
   const isLoser = useMemo(() => {
-    return guessedLetters.filter((letter) => letter !== " ").length >= 3;
-  }, [guessedLetters]);
+    return incorrectLetters.length >= 3;
+  }, [incorrectLetters]);
 
   const isWinner = useMemo(() => {
     if (!currentGame?.prompt) return false;
