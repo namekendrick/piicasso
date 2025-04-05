@@ -36,7 +36,7 @@ export const DailyGame = () => {
         <Keyboard
           addGuessedLetter={addGuessedLetter}
           activeLetters={guessedLetters.filter((letter) =>
-            currentGame.prompt.includes(letter),
+            currentGame.prompt.toLowerCase().includes(letter.toLowerCase()),
           )}
           inactiveLetters={incorrectLetters}
           isWinner={isWinner}
